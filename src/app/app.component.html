@@ -1,0 +1,71 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="contenet">
+  <div style="text-align:center">
+    <h1>
+      Welcome to {{title}}!
+    </h1>
+    <form (submit)="search()">
+    <input type="text" name="szukaj" class="form-control" [(ngModel)]="szukaj">
+    <button class="btn btn-primary" [disabled] = "!szukaj" >Submit</button>  
+    </form>
+
+
+  </div>
+
+
+  <!-- <pre>
+  {{ (szukaj) | json}}
+</pre> -->
+
+  <ul class="book-list">
+    <li class="item" *ngFor="let book of books | async">
+      <div class="row">
+
+        <!-- cover -->
+        <div class="book-cover col-sm-3 text-center">
+          <a href="{{book.url}}" target="_blank">
+            <img src="{{book.cover}}" alt="{{book.title}}" class="img-thumbnail">
+          </a>
+        </div>
+
+        <!-- book-contenet -->
+        <div class="book-content col-sm-9">
+          <header>
+            <span>{{book.type}}</span>
+            <h3>{{book.title}}</h3>
+          </header>
+          <hr>
+          <div class="row">
+            <div class="col-sm-6">
+              <dl class="row text-center">
+                <dt class="col-4 text-right">autor:</dt>
+                <dd class="col-8 text-left">{{book.author}}</dd>
+                <dt class="col-4 text-right">liczba stron:</dt>
+                <dd class="col-8 text-left">{{book.pages_count}}</dd>
+                <dt class="col-4 text-right">ISBN:</dt>
+                <dd class="col-8 text-left">{{book.isbn}}</dd>
+                <dt class="col-4 text-right">MEN:</dt>
+                <dd class="col-8 text-left">{{book.men}}</dd>
+                <dt class="col-4 text-right">poziom:</dt>
+                <dd class="col-8 text-left" *ngFor="let l of book.levels ">{{l.school}}</dd>
+              </dl>
+            </div>
+            <div class="col-sm-6">
+              <dl class="row text-center">
+                <dt class="col-4 text-right">przedmiot:</dt>
+                <dd class="col-8 text-left">{{book.subject}}</dd>
+                <dt class="col-4 text-right">rodzaj pub.:</dt>
+                <dd class="col-8 text-left">{{book.type}}</dd>
+                <dt class="col-4 text-right">ISBN:</dt>
+                <dd class="col-8 text-left">{{book.isbn}}</dd>
+                <dt class="col-4 text-right">MEN:</dt>
+                <dd class="col-8 text-left">{{book.men}}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+</div>
