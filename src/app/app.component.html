@@ -1,75 +1,94 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="content">
-  <div style="text-align:center">
-    <h1>
+<div class="container">
+  <div class="header">
+    <h1 style="text-align:center">
       Welcome to {{title}}!
     </h1>
+    <br />
+    <!-- Formularz wyszukiwania -->
+    <span class="text-left">W naszej wyszukiwarce możesz wyszukajć książki wpisując np. autora, tytuł lub nazwę przedmiotu</span>
     <form (submit)="search()">
-      <input type="text" name="szukaj" placeholder="Wpisz intresującą cię frazę np. napzwę przedmiotu lub autra książki" class="form-control" [(ngModel)]="szukaj">
-      <button class="btn btn-primary" [disabled]="!szukaj">Submit</button>
+      <div class="input-group">
+        <input type="text" class="form-control" name="szukaj" placeholder="Czego szukasz..." aria-label="Czego szukasz... " [(ngModel)]="szukaj">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" [disabled]="!szukaj">Submint</button>
+        </span>
+      </div>
     </form>
-
-
   </div>
 
 
-  <pre>
-  {{ i }}
-</pre>
+  <div *ngIf="books?.length == 0" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>UPS!!!!</strong>Nie znaleźliśmy nic co spełania twoje wymagania
+  </div>
 
-  <p *ngIf="books?.length == 0">UPS!!! Nie znaleźliśmy nic co spełania twoje wymagania</p>
-  <p *ngIf="loading">Loading</p>
-  
 
-  <ng-template #elseBlock>Czego szukasz?</ng-template>
-  
-  <ul class="book-list" *ngIf="books; else elseBlock" >
-      <p>{{books?.length}}</p> 
-    <li class="item" *ngFor="let book of books">
-      <div class="row">
+  <!-- <ng-template #elseBlock>W naszej wyszukiwarce możesz wyszukajć książki wpisując np. autora, tytuł lub nazwę przedmiotu </ng-template> -->
+  <div id="loading" class="" *ngIf="loading">
+    <img alt="Loading..." src="https://www.echallan.org/publicview/images/demo_wait.gif">
+  </div>
 
-        <!-- cover -->
-        <div class="book-cover col-sm-3 text-center">
-          <a href="{{book.url}}" target="_blank">
-            <img src="{{book.cover}}" alt="{{book.title}}" class="img-thumbnail">
-          </a>
-        </div>
 
-        <!-- book-contenet -->
-        <div class="book-content col-sm-9">
-          <header>
-            <span>{{book.type}}</span>
-            <h3>{{book.title}}</h3>
-          </header>
-          <hr>
-          <div class="row">
-            <div class="col-sm-6">
-              <dl class="row text-center">
-                <dt class="col-4 text-right">autor:</dt>
-                <dd class="col-8 text-left">{{book.author}}</dd>
-                <dt class="col-4 text-right">liczba stron:</dt>
-                <dd class="col-8 text-left">{{book.pages_count}}</dd>
-                <dt class="col-4 text-right">ISBN:</dt>
-                <dd class="col-8 text-left">{{book.isbn}}</dd>
-                <dt class="col-4 text-right">MEN:</dt>
-                <dd class="col-8 text-left">{{book.men}}</dd>
-              </dl>
+
+
+  <!-- wyświetlnenie w pętli książek wyszukanych w bazie-->
+  <div class="">
+    <div class="text-right" *ngIf="books">
+      <span>Wyszukanych elementów: {{books?.length}}</span>
+    </div>
+    <ul class="book-list row justify-content-between" *ngIf="books">
+      <li class="item col-12 col-sm-12 col-md-6 col-lg-6 col-xl-12" *ngFor="let book of books">
+        <div class="row">
+
+          <!-- cover -->
+          <div class="book-cover col-md-12 col-xl-3 text-center">
+            <div class="=row">
+              <div class="col-12">
+                <a href="{{book.url}}" target="_blank">
+                  <img src="{{book.cover}}" alt="{{book.title}}" class="img-thumbnail">
+                </a>
+              </div>
+              <div class="col-12">
+                <a class="btn btn-primary" href="{{book.url}}" role="button" target="_blank">Kup</a>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <dl class="row text-center">
-                <dt class="col-4 text-right">poziom:</dt>
-                <dd class="col-8 text-left" *ngFor="let l of book.levels ">{{l.school}}</dd>
+          </div>
 
-                <dt class="col-4 text-right">przedmiot:</dt>
-                <dd class="col-8 text-left">{{book.subject}}</dd>
-                <dt class="col-4 text-right">rodzaj pub.:</dt>
-                <dd class="col-8 text-left">{{book.type}}</dd>
-              </dl>
+          <!-- book-contenet -->
+          <div class="book-content col-md-12 col-xl-9">
+            <header>
+              <span>{{book.type}}</span>
+              <h4>{{book.title}}</h4>
+            </header>
+            <hr>
+            <div class="row">
+              <div class="col-sm-6 col-md-12 col-xl-6">
+                <dl class="row text-center">
+                  <dt class="col-4 text-right">autor:</dt>
+                  <dd class="col-8 text-left">{{book.author}}</dd>
+                  <dt class="col-4 text-right">liczba stron:</dt>
+                  <dd class="col-8 text-left">{{book.pages_count}}</dd>
+                  <dt class="col-4 text-right">ISBN:</dt>
+                  <dd class="col-8 text-left">{{book.isbn}}</dd>
+                  <dt class="col-4 text-right">MEN:</dt>
+                  <dd class="col-8 text-left">{{book.men}}</dd>
+                </dl>
+              </div>
+              <div class="col-sm-6 col-md-12 col-xl-6">
+                <dl class="row text-center">
+                  <dt class="col-4 text-right">poziom:</dt>
+                  <dd class="col-8 text-left" *ngFor="let l of book.levels ">{{l.school}}</dd>
+                  <dt class="col-4 text-right">przedmiot:</dt>
+                  <dd class="col-8 text-left">{{book.subject}}</dd>
+                  <dt class="col-4 text-right">rodzaj pub.:</dt>
+                  <dd class="col-8 text-left">{{book.type}}</dd>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 
 </div>
