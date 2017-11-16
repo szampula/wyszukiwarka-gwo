@@ -1,24 +1,31 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="contenet">
+<div class="content">
   <div style="text-align:center">
     <h1>
       Welcome to {{title}}!
     </h1>
     <form (submit)="search()">
-    <input type="text" name="szukaj" class="form-control" [(ngModel)]="szukaj">
-    <button class="btn btn-primary" [disabled] = "!szukaj" >Submit</button>  
+      <input type="text" name="szukaj" placeholder="Wpisz intresującą cię frazę np. napzwę przedmiotu lub autra książki" class="form-control" [(ngModel)]="szukaj">
+      <button class="btn btn-primary" [disabled]="!szukaj">Submit</button>
     </form>
 
 
   </div>
 
 
-  <!-- <pre>
-  {{ (szukaj) | json}}
-</pre> -->
+  <pre>
+  {{ i }}
+</pre>
 
-  <ul class="book-list">
-    <li class="item" *ngFor="let book of books | async">
+  <p *ngIf="books?.length == 0">UPS!!! Nie znaleźliśmy nic co spełania twoje wymagania</p>
+  <p *ngIf="loading">Loading</p>
+  
+
+  <ng-template #elseBlock>Czego szukasz?</ng-template>
+  
+  <ul class="book-list" *ngIf="books; else elseBlock" >
+      <p>{{books?.length}}</p> 
+    <li class="item" *ngFor="let book of books">
       <div class="row">
 
         <!-- cover -->
@@ -46,20 +53,17 @@
                 <dd class="col-8 text-left">{{book.isbn}}</dd>
                 <dt class="col-4 text-right">MEN:</dt>
                 <dd class="col-8 text-left">{{book.men}}</dd>
-                <dt class="col-4 text-right">poziom:</dt>
-                <dd class="col-8 text-left" *ngFor="let l of book.levels ">{{l.school}}</dd>
               </dl>
             </div>
             <div class="col-sm-6">
               <dl class="row text-center">
+                <dt class="col-4 text-right">poziom:</dt>
+                <dd class="col-8 text-left" *ngFor="let l of book.levels ">{{l.school}}</dd>
+
                 <dt class="col-4 text-right">przedmiot:</dt>
                 <dd class="col-8 text-left">{{book.subject}}</dd>
                 <dt class="col-4 text-right">rodzaj pub.:</dt>
                 <dd class="col-8 text-left">{{book.type}}</dd>
-                <dt class="col-4 text-right">ISBN:</dt>
-                <dd class="col-8 text-left">{{book.isbn}}</dd>
-                <dt class="col-4 text-right">MEN:</dt>
-                <dd class="col-8 text-left">{{book.men}}</dd>
               </dl>
             </div>
           </div>
