@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy": "rmdir ./docs /s /q & rename dist docs"
+    "copy": "rmdir docs /s /q & rename dist docs"
   },
   "private": true,
   "dependencies": {
