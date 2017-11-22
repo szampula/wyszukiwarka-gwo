@@ -13,8 +13,9 @@ export class AppComponent {
   title = 'GWO';
   readonly ROOT_URL = 'https://gwo.pl';
   books: any;
-  szukaj: string;
+  szukaj: any;
   loading = false;
+  p: number = 1; 
 
   constructor(private http: HttpClient) {
     // this.getBooks();
